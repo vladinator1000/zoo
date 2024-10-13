@@ -27,7 +27,7 @@ fn start_rendering_loop() {
     let card = document.get_element_by_id("card").unwrap();
 
     let is_mouse_down = Rc::new(RefCell::new(false));
-    // To appease the borrow check gods
+    // Appease the borrow checker
     let is_mouse_down_cloned = Rc::clone(&is_mouse_down);
     let is_mouse_down_cloned_2 = Rc::clone(&is_mouse_down);
 
@@ -69,7 +69,7 @@ fn start_rendering_loop() {
     .forget();
 
     // Rendering loop inspired by
-    // https://rustwasm.github.io/wasm-bindgen/examples/request-animation-frame_count.html
+    // https://github.com/rustwasm/wasm-bindgen/blob/5e98a17da61dcc59b16b6fcb52f9d96517518025/examples/request-animation-frame/src/lib.rs
     let rendering_callback_cell_one = Rc::new(RefCell::new(None));
     let rendering_callback_cell_two = rendering_callback_cell_one.clone();
 
@@ -91,10 +91,10 @@ fn request_animation_frame(f: &Closure<dyn FnMut()>) {
 }
 
 const GLYPH_WIDTH: f64 = 10.0;
-const GLYPH_HEIGHT: f64 = 15.0;
+const GLYPH_HEIGHT: f64 = 15.0; 
 const LINE_SPACING: f64 = 13.0;
 
-// Magic numbers, don't ask. Call it resourceful problem solving, if you will.
+// Magic numbers, don't ask.
 const WIDTH_COMPENSATION: f64 = GLYPH_WIDTH / 115.0;
 const HEIGHT_COMPENSATION: f64 = (GLYPH_HEIGHT + LINE_SPACING) / 868.0;
 
@@ -140,19 +140,14 @@ fn get_characters(mask: Mask) -> Characters {
             let y_index = index / WIDTH;
             let sentence = MESSAGE[y_index];
             let is_message_index = x_index > PADDING && y_index != 0 && y_index != sentence.len();
-            let stamp_index = x_index % 3;
 
-            let top_layer = match stamp_index {
-                2 => '0',
-                1 => '0',
-                0 => '0',
-                _ => 'n',
+            let pattern_index = x_index % 3;
+            let top_layer = match pattern_index {
+                _ => '0',
             };
-            let bottom_layer = match stamp_index {
-                2 => 'O',
-                1 => 'Z',
-                0 => 'O',
-                _ => 'n',
+            let bottom_layer = match pattern_index - 1 {
+                0 => 'Z',
+                _ => 'O',
             };
 
             characters[index] = if mask[index] {
