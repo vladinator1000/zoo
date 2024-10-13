@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>For Zoo</title>
+    <style>
+      :root {
+        --brand: #436fff;
+        --gold: #F5CF65;
+      }
+
+      @font-face {
+        font-family: "Clacon";
+        src: url('fonts/clacon2.woff2') format('woff2');
+      }
+
+      html, body {
+        display: grid;
+        align-items: center;
+        justify-items: center;
+
+        height: 100%;
+        width: 100%;
+
+        font-family: Clacon, Calibri;
+        background-color: #0B1418;
+        color: #c7c7c7;
+      }
+     
+      a {
+        color: var(--brand)
+      }
+
+      .container {
+        font-size: x-large;
+        display: grid;
+        align-items: center;
+        justify-items: center;
+        padding: 2px;
+        height:fit-content;
+        gap: 2px;
+      } 
+
+      .greeting {
+        margin-top: 30px;
+        font-weight: 100;
+        font-size: medium;
+        color: #FFFFFF
+      }
+
+      .small {
+        font-size: small;
+      }
+      
+      .hint {
+        font-weight: 100;
+        font-size: medium;
+      }
+
+      #card { 
+        color: var(--gold);
+        
+        width: 480px;
+        height: auto;
+        
+        padding: 14px;
+        padding-right: 0px;
+        border: 3px dashed var(--brand);
+      }
+
+      @media screen and (max-width: 1000px) {
+        /* Disable scroll */
+        html body {
+          margin: 0;
+          overflow: hidden;
+        }
+      }
+
+      .no-user-select {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>This page contains WebAssembly and JavaScript, please enable JavaScript in your browser.</noscript>
+    <div class="container">
+      <span class="greeting no-user-select">To Zoo, from Vlady.</span>
+      <span class="small no-user-select">(please scratch)</span>
+      <p id="card" class="no-user-select"></p>
+      <a class="hint" href="https://vladinator.net" target="_blank">vladinator.net</a>
+      <div class="container">
+        <span class="hint no-user-select">Made with Rust and WASM.</span>
+        <span class="hint no-user-select">
+          Source code <a class="hint no-user-select" href="https://github.com/vladinator1000/zoo" target="_blank">available here</a>.
+        </span>
+        <a class="hint" href="mailto:vladyv@protonmail.com" target="_blank">vladyv@protonmail.com</a>
+      </div>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>
