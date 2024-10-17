@@ -57,7 +57,7 @@ fn start_rendering_loop() {
         let x = (event.client_x() as f64) - rect.left();
         let y = (event.client_y() as f64) - rect.top();
 
-        let mask_index: usize = calc_mask_index_1d(x, y);
+        let mask_index: usize = transform_mouse_coordinates_to_mask_index(x, y);
 
         if *is_mouse_down_cloned_2.borrow() && mask_index < AREA {
             let mut borrowed_mask = *mask.borrow_mut();
@@ -94,11 +94,15 @@ const GLYPH_WIDTH: f64 = 10.0;
 const GLYPH_HEIGHT: f64 = 15.0; 
 const LINE_SPACING: f64 = 13.0;
 
-// Magic numbers, don't ask.
+
 const WIDTH_COMPENSATION: f64 = GLYPH_WIDTH / 115.0;
 const HEIGHT_COMPENSATION: f64 = (GLYPH_HEIGHT + LINE_SPACING) / 868.0;
 
-fn calc_mask_index_1d(x: f64, y: f64) -> usize {
+/**
+* The text characters are stored in a 1d array, while the mouse is in 2d.
+* These magic numbers let us transform the mouse coordinates to the mask coordinate space.
+*/
+fn transform_mouse_coordinates_to_mask_index(x: f64, y: f64) -> usize {
     let x_index = (x * WIDTH_COMPENSATION) as usize - 1;
     let y_index = (y * HEIGHT_COMPENSATION) as usize;
     y_index * WIDTH + x_index
